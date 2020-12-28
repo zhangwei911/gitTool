@@ -40,9 +40,16 @@ else:
     f.close()
 
 
-startTime = input("请输入提交时间(例如2020-06-18 20:54:00):")
+startTime = input("请输入提交开始时间(例如2020-06-18 20:54:00):")
 
 logStartTime = datetime.strptime(startTime,"%Y-%m-%d %H:%M:%S")
+
+
+endTime = input("请输入提交结束时间(例如2020-06-18 20:54:00):")
+if endTime != '':
+    logEndTime = datetime.strptime(endTime, "%Y-%m-%d %H:%M:%S")
+else:
+    logEndTime = ''
 
 r = Repo(gitPath)
 r.iter_commits()
@@ -58,7 +65,7 @@ for item in r.iter_commits():
     timeArray = time.localtime(item.committed_date)
     logTimeStr = time.strftime("%Y-%m-%d %H:%M:%S",timeArray)
     logTime = datetime.strptime(logTimeStr,"%Y-%m-%d %H:%M:%S")
-    if(logTime >= logStartTime):
+    if(logTime >= logStartTime and (endTime == '' or logTime <= logEndTime)):
         messageArray = item.message.split("\n")
         for message in messageArray:
             if message.strip()!='':
