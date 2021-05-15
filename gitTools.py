@@ -40,13 +40,25 @@ else:
     f.close()
 
 
+everyDayInput = input("是否分天打印日志(y/Y是 n/N否 默认是):")
+isEveryDay = True
+if len(everyDayInput) == 1 and (everyDayInput == 'n' or everyDayInput == 'N'):
+    isEveryDay = False
+elif (len(everyDayInput) == 1 and (everyDayInput != 'y' and everyDayInput != 'Y' and everyDayInput != 'n' and everyDayInput != 'N')) or len(everyDayInput) > 1:
+    exit()
+
 startTime = input("请输入提交开始时间(例如2020-06-18 20:54:00):")
+
+if len(startTime) == 10:
+    startTime += ' 00:00:00'
 
 logStartTime = datetime.strptime(startTime,"%Y-%m-%d %H:%M:%S")
 
 
 endTime = input("请输入提交结束时间(例如2020-06-18 20:54:00):")
 if endTime != '':
+    if len(endTime) == 10:
+        endTime += ' 00:00:00'
     logEndTime = datetime.strptime(endTime, "%Y-%m-%d %H:%M:%S")
 else:
     logEndTime = ''
